@@ -39,6 +39,7 @@ function Roadmap() {
   const milestones = data?.milestones ?? [];
   const tasksByMilestone = new Map<string, any[]>();
   for (const t of data?.tasks ?? []) {
+    if (!t.milestone_id) continue;
     const list = tasksByMilestone.get(t.milestone_id) ?? [];
     list.push(t);
     tasksByMilestone.set(t.milestone_id, list);
