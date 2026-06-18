@@ -14,7 +14,303 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          company: string
+          created_at: string
+          id: string
+          link: string | null
+          location: string | null
+          notes: string | null
+          role: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          id?: string
+          link?: string | null
+          location?: string | null
+          notes?: string | null
+          role: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          id?: string
+          link?: string | null
+          location?: string | null
+          notes?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      career_goals: {
+        Row: {
+          created_at: string
+          id: string
+          target_role: string
+          timeline_months: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          target_role: string
+          timeline_months?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          target_role?: string
+          timeline_months?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      career_scores: {
+        Row: {
+          applications_score: number
+          consistency_score: number
+          focus_score: number
+          roadmap_score: number
+          skills_score: number
+          total_score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          applications_score?: number
+          consistency_score?: number
+          focus_score?: number
+          roadmap_score?: number
+          skills_score?: number
+          total_score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          applications_score?: number
+          consistency_score?: number
+          focus_score?: number
+          roadmap_score?: number
+          skills_score?: number
+          total_score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      focus_sessions: {
+        Row: {
+          duration_minutes: number
+          ended_at: string | null
+          id: string
+          started_at: string
+          task_id: string | null
+          user_id: string
+        }
+        Insert: {
+          duration_minutes: number
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          task_id?: string | null
+          user_id: string
+        }
+        Update: {
+          duration_minutes?: number
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          task_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "focus_sessions_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          academic_year: string | null
+          college: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          onboarded: boolean
+          updated_at: string
+        }
+        Insert: {
+          academic_year?: string | null
+          college?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          onboarded?: boolean
+          updated_at?: string
+        }
+        Update: {
+          academic_year?: string | null
+          college?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          onboarded?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      roadmap_milestones: {
+        Row: {
+          description: string | null
+          id: string
+          position: number
+          roadmap_id: string
+          title: string
+          user_id: string
+          week_end: number
+          week_start: number
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          position: number
+          roadmap_id: string
+          title: string
+          user_id: string
+          week_end: number
+          week_start: number
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          position?: number
+          roadmap_id?: string
+          title?: string
+          user_id?: string
+          week_end?: number
+          week_start?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roadmap_milestones_roadmap_id_fkey"
+            columns: ["roadmap_id"]
+            isOneToOne: false
+            referencedRelation: "roadmaps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roadmaps: {
+        Row: {
+          created_at: string
+          id: string
+          target_role: string
+          total_weeks: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          target_role: string
+          total_weeks: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          target_role?: string
+          total_weeks?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      skill_assessments: {
+        Row: {
+          id: string
+          rating: number
+          skill: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          rating: number
+          skill: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          rating?: number
+          skill?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          id: string
+          milestone_id: string | null
+          position: number
+          title: string
+          user_id: string
+          week_number: number
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          milestone_id?: string | null
+          position?: number
+          title: string
+          user_id: string
+          week_number: number
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          milestone_id?: string | null
+          position?: number
+          title?: string
+          user_id?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "roadmap_milestones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
