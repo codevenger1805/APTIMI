@@ -2,8 +2,13 @@
 
 **A career execution platform that helps students turn career goals into clear, actionable steps.**
 
-🔗 **[Explore the Live Product](https://aptimi-pathfinder.lovable.app/)** — Try the complete APTIMI experience.
-🎨 **[Explore the Product Design](https://www.figma.com/design/leMc2kWCCuvCD0e00AgsMS/APTIMI?node-id=0-1&p=f&t=nqA8MmOx8vyI7o1G-0)** — View the product thinking and interface design.
+🔗 **[Explore the Live Product](https://aptimi-pathfinder.lovable.app/)**
+Try the complete APTIMI experience.
+
+ 
+
+🎨 **[Explore the Product Design](https://www.figma.com/design/leMc2kWCCuvCD0e00AgsMS/APTIMI?node-id=0-1&p=f&t=nqA8MmOx8vyI7o1G-0)**
+View the product thinking and interface design.
 
 ### Why APTIMI?
 
