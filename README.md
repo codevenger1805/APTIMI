@@ -1,6 +1,8 @@
 # 🚀 APTIMI
 
-### [Open APTIMI →](https://aptimi-pathfinder.lovable.app/)
+### [🌐 Open APTIMI →](https://aptimi-pathfinder.lovable.app/)
+
+### [🎨 View Figma Design →](https://www.figma.com/design/leMc2kWCCuvCD0e00AgsMS/APTIMI?node-id=0-1&p=f&t=nqA8MmOx8vyI7o1G-0)
 
 **APTIMI** is a career execution platform that helps students turn career goals into **structured plans, consistent action, and measurable progress.**
 
@@ -22,7 +24,7 @@ APTIMI works as a **Career Operating System**, connecting career goals with the 
 
 * 🎯 Career Goal Setup
 * 📈 Skill Gap Analysis
-* 🗺️ Personalized Roadmaps
+* 🗺️ Personalized Career Roadmaps
 * ✅ Weekly Action Planner
 * ⏱️ Focus Mode
 * 💼 Internship Tracker
