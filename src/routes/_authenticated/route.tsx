@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -87,16 +88,24 @@ function AppShell() {
               <div className="truncate text-xs font-medium">{name}</div>
               <div className="truncate text-[11px] text-muted-foreground">{user.email}</div>
             </div>
-            <button onClick={signOut} className="text-muted-foreground hover:text-foreground" aria-label="Sign out">
+            <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out" title="Sign out" className="h-8 w-8 text-muted-foreground hover:text-foreground">
               <LogOut className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
         </div>
       </aside>
 
-      <main className="flex-1 min-w-0">
+      <main id="main-content" className="flex-1 min-w-0 pb-16 md:pb-0">
         <Outlet />
       </main>
+      <nav aria-label="Main navigation" className="fixed inset-x-0 bottom-0 z-30 flex gap-1 overflow-x-auto border-t border-border bg-background px-2 pb-[env(safe-area-inset-bottom)] md:hidden">
+        {NAV.map((n) => {
+          const Icon = n.icon;
+          const active = pathname === n.to;
+          return <Link key={n.to} to={n.to as any} aria-current={active ? "page" : undefined} className={`flex min-w-[64px] flex-1 flex-col items-center gap-1 px-1 py-2 text-[10px] ${active ? "text-primary font-semibold" : "text-muted-foreground"}`}><Icon aria-hidden="true" className="h-4 w-4" />{n.label}</Link>;
+        })}
+        <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out" title="Sign out" className="h-12 min-w-12 text-muted-foreground"><LogOut aria-hidden="true" className="h-4 w-4" /></Button>
+      </nav>
     </div>
   );
 }

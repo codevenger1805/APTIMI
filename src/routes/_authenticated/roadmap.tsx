@@ -52,17 +52,17 @@ function Roadmap() {
         title={r ? `Your ${r.target_role} path` : "Your roadmap"}
         subtitle={r ? `${Math.ceil(r.total_weeks / 4)} months · ${r.total_weeks} weeks · ${milestones.length} milestones` : ""}
       />
-      <div className="px-8 py-8 space-y-4 max-w-4xl">
+      <div className="px-5 py-8 space-y-2 max-w-4xl md:px-8">
         {milestones.map((m, i) => {
           const list = tasksByMilestone.get(m.id) ?? [];
           const done = list.filter((t) => t.completed).length;
           return (
-            <div key={m.id} className="rounded-xl border border-border bg-card overflow-hidden">
-              <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-border">
+            <section key={m.id} className="border-b border-border py-4">
+              <div className="flex items-start justify-between gap-4 pb-4">
                 <div className="flex items-start gap-3 min-w-0">
                   <div className="h-7 w-7 shrink-0 rounded-md bg-accent text-accent-foreground grid place-items-center text-sm font-semibold">{i + 1}</div>
                   <div className="min-w-0">
-                    <div className="font-semibold">{m.title}</div>
+                    <h2 className="font-semibold">{m.title}</h2>
                     <div className="text-sm text-muted-foreground">{m.description}</div>
                     <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground"><Clock className="h-3 w-3" /> Weeks {m.week_start}{m.week_start !== m.week_end ? `–${m.week_end}` : ""}</div>
                   </div>
@@ -72,12 +72,12 @@ function Roadmap() {
               <ul className="divide-y divide-border">
                 {list.map((t) => (
                   <li key={t.id} className="flex items-center gap-3 px-5 py-3">
-                    <Checkbox checked={t.completed} onCheckedChange={(v) => toggle.mutate({ id: t.id, completed: !!v })} />
-                    <span className={`text-sm ${t.completed ? "line-through text-muted-foreground" : ""}`}>{t.title}</span>
+                    <Checkbox id={`roadmap-${t.id}`} aria-label={`Mark ${t.title} complete`} checked={t.completed} onCheckedChange={(v) => toggle.mutate({ id: t.id, completed: !!v })} />
+                    <label htmlFor={`roadmap-${t.id}`} className={`min-w-0 cursor-pointer break-words text-sm ${t.completed ? "line-through text-muted-foreground" : ""}`}>{t.title}</label>
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
           );
         })}
         {milestones.length === 0 && (
