@@ -56,13 +56,13 @@ function Applications() {
           <DialogContent>
             <DialogHeader><DialogTitle>New application</DialogTitle></DialogHeader>
             <div className="space-y-3">
-              <div><Label>Company</Label><Input className="mt-1" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
-              <div><Label>Role</Label><Input className="mt-1" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} /></div>
-              <div><Label>Location</Label><Input className="mt-1" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
-              <div><Label>Link</Label><Input className="mt-1" placeholder="https://..." value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })} /></div>
+              <div><Label htmlFor="app-company">Company</Label><Input id="app-company" autoComplete="organization" className="mt-1" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></div>
+              <div><Label htmlFor="app-role">Role</Label><Input id="app-role" className="mt-1" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} /></div>
+              <div><Label htmlFor="app-location">Location</Label><Input id="app-location" className="mt-1" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
+              <div><Label htmlFor="app-link">Link</Label><Input id="app-link" type="url" className="mt-1" placeholder="https://…" value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })} /></div>
               <div>
-                <Label>Status</Label>
-                <select className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value as AppStatus })}>
+                <Label htmlFor="app-status">Status</Label>
+                <select id="app-status" className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value as AppStatus })}>
                   {STATUSES.map((s) => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
                 </select>
               </div>
@@ -71,31 +71,31 @@ function Applications() {
           </DialogContent>
         </Dialog>
       } />
-      <div className="px-8 py-8 overflow-x-auto">
-        <div className="grid grid-cols-6 gap-3 min-w-[1100px]">
+      <div className="px-5 py-8 overflow-x-auto md:px-8">
+        <div className="grid grid-cols-6 gap-4 min-w-[1050px]">
           {STATUSES.map((s) => {
             const items = apps.filter((a) => a.status === s);
             return (
-              <div key={s} className="rounded-xl border border-border bg-secondary/40">
-                <div className="flex items-center justify-between px-3 py-2 border-b border-border">
-                  <span className="eyebrow">{STATUS_LABELS[s]}</span>
+              <section key={s} className="min-w-0">
+                <div className="flex items-center justify-between gap-2 px-1 py-3 border-b border-border">
+                  <h2 className="text-sm font-semibold">{STATUS_LABELS[s]}</h2>
                   <span className="text-xs font-medium text-muted-foreground tabular-nums">{items.length}</span>
                 </div>
-                <ul className="p-2 space-y-2 min-h-[120px]">
+                <ul className="py-3 space-y-2 min-h-[120px]">
                   {items.map((a) => (
                     <li key={a.id} className="rounded-md border border-border bg-card p-3 text-sm">
                       <div className="font-medium truncate">{a.company}</div>
                       <div className="text-xs text-muted-foreground truncate">{a.role}{a.location ? ` · ${a.location}` : ""}</div>
                       <div className="mt-2 flex items-center justify-between gap-2">
-                        <select value={a.status} onChange={(e) => updateStatus.mutate({ id: a.id, status: e.target.value as AppStatus })} className="h-7 rounded border border-input bg-background px-1.5 text-xs flex-1 min-w-0">
+                        <select aria-label={`Status for ${a.company}`} value={a.status} onChange={(e) => updateStatus.mutate({ id: a.id, status: e.target.value as AppStatus })} className="h-8 rounded border border-input bg-background px-1.5 text-xs flex-1 min-w-0">
                           {STATUSES.map((s2) => <option key={s2} value={s2}>{STATUS_LABELS[s2]}</option>)}
                         </select>
-                        {a.link && <a href={a.link} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground"><ExternalLink className="h-3.5 w-3.5" /></a>}
+                        {a.link && <a href={a.link} target="_blank" rel="noreferrer" aria-label={`Open ${a.company} application link`} className="text-muted-foreground hover:text-foreground"><ExternalLink className="h-3.5 w-3.5" /></a>}
                       </div>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             );
           })}
         </div>

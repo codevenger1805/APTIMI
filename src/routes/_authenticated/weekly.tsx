@@ -46,19 +46,19 @@ function Weekly() {
     <div>
       <PageHeader eyebrow="Weekly Planner" title={`Week ${week}`} subtitle={`${done} of ${tasks.length} tasks complete · ${pct}%`} actions={
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" onClick={() => setWeek((w) => Math.max(1, w - 1))} disabled={week <= 1}><ChevronLeft className="h-4 w-4" /></Button>
+          <Button variant="outline" size="icon" aria-label="Previous week" onClick={() => setWeek((w) => Math.max(1, w - 1))} disabled={week <= 1}><ChevronLeft className="h-4 w-4" /></Button>
           <span className="text-sm font-medium tabular-nums">Week {week} / {total}</span>
-          <Button variant="outline" size="icon" onClick={() => setWeek((w) => Math.min(total, w + 1))} disabled={week >= total}><ChevronRight className="h-4 w-4" /></Button>
+          <Button variant="outline" size="icon" aria-label="Next week" onClick={() => setWeek((w) => Math.min(total, w + 1))} disabled={week >= total}><ChevronRight className="h-4 w-4" /></Button>
         </div>
       } />
-      <div className="px-8 py-8 max-w-3xl">
+      <div className="px-5 py-8 max-w-3xl md:px-8">
         <div className="h-2 w-full rounded-full bg-secondary mb-6"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
-        <ul className="rounded-xl border border-border bg-card divide-y divide-border">
+        <ul className="divide-y divide-border">
           {tasks.length === 0 && <li className="px-5 py-8 text-sm text-muted-foreground">No tasks scheduled for this week.</li>}
           {tasks.map((t) => (
             <li key={t.id} className="flex items-center gap-3 px-5 py-3">
-              <Checkbox checked={t.completed} onCheckedChange={(v) => toggle.mutate({ id: t.id, completed: !!v })} />
-              <span className={`text-sm ${t.completed ? "line-through text-muted-foreground" : ""}`}>{t.title}</span>
+              <Checkbox id={`weekly-${t.id}`} aria-label={`Mark ${t.title} complete`} checked={t.completed} onCheckedChange={(v) => toggle.mutate({ id: t.id, completed: !!v })} />
+              <label htmlFor={`weekly-${t.id}`} className={`min-w-0 cursor-pointer break-words text-sm ${t.completed ? "line-through text-muted-foreground" : ""}`}>{t.title}</label>
             </li>
           ))}
         </ul>

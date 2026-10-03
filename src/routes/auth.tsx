@@ -104,12 +104,12 @@ function Auth() {
             {mode === "signup" && (
               <div>
                 <Label htmlFor="name">Full name</Label>
-                <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} required className="mt-1" />
+                <Input id="name" name="name" autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} required className="mt-1" />
               </div>
             )}
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1" />
+              <Input id="email" name="email" type="email" autoComplete="email" spellCheck={false} value={email} onChange={(e) => setEmail(e.target.value)} required className="mt-1" />
             </div>
             {mode !== "reset" && (
               <div>
@@ -119,7 +119,7 @@ function Auth() {
                     <Link to="/auth" search={{ mode: "reset" }} className="text-xs text-primary hover:underline">Forgot?</Link>
                   )}
                 </div>
-                <Input id="pw" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} className="mt-1" />
+                <Input id="pw" name="password" type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} className="mt-1" />
               </div>
             )}
             <Button type="submit" className="w-full" disabled={loading}>

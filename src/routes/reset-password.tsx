@@ -32,7 +32,7 @@ function ResetPassword() {
         <h1 className="text-xl font-semibold tracking-tight">Set a new password</h1>
         <div>
           <Label htmlFor="pw">New password</Label>
-          <Input id="pw" type="password" minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1" />
+          <Input id="pw" name="password" type="password" autoComplete="new-password" minLength={6} required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1" />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>Update password</Button>
       </form>

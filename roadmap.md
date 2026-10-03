@@ -1,0 +1,3 @@
+- [x] Simplify dashboard and core execution screens while preserving navigation and visual identity.
+- [x] Fix the focus timer and make controls accessible.
+- [ ] Verify signed-in timer persistence and responsive layout; preview sign-in is blocked until an account is provided.
