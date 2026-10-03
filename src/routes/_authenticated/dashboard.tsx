@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { focusStreak } from "@/lib/aptimi";
 import { PageHeader } from "@/components/page-header";
-import { Timer, ListChecks, Briefcase, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard · APTIMI" }] }),
@@ -53,43 +53,44 @@ function Dashboard() {
     <div className="min-h-screen">
       <PageHeader eyebrow="Dashboard" title={`${greet()}, ${firstName}.`} subtitle="Here's where you stand on the path to your target role." />
 
-      <div className="px-8 pb-12 grid gap-6 lg:grid-cols-3">
-        <ScoreCard parts={score} />
-
-        <div className="grid grid-cols-2 gap-3 lg:col-span-2">
-          <Stat label="Tasks completed" value={`${tasksDone}/${tasksAll.length || 0}`} icon={ListChecks} />
-          <Stat label="Total focus" value={`${Math.floor(totalMin / 60)}h ${totalMin % 60}m`} icon={Timer} />
-          <Stat label="Applications" value={`${data?.apps.length ?? 0} submitted`} icon={Briefcase} />
-          <Stat label="Focus streak" value={`${streak} day${streak === 1 ? "" : "s"}`} icon={Timer} />
+      <div className="mx-auto max-w-6xl px-5 pb-12 md:px-8">
+        <div className="grid gap-8 border-b border-border py-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+          <ScoreCard parts={score} />
+          <div className="grid grid-cols-2 gap-x-6 gap-y-6 content-center">
+            <Stat label="Tasks completed" value={`${tasksDone}/${tasksAll.length}`} />
+            <Stat label="Total focus" value={`${Math.floor(totalMin / 60)}h ${totalMin % 60}m`} />
+            <Stat label="Applications" value={`${data?.apps.length ?? 0}`} />
+            <Stat label="Focus streak" value={`${streak} day${streak === 1 ? "" : "s"}`} />
+          </div>
         </div>
 
-        <div className="lg:col-span-2 rounded-xl border border-border bg-card">
-          <div className="flex items-center justify-between border-b border-border px-5 py-3">
+        <div className="grid gap-10 py-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <section className="min-w-0">
+          <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
             <div>
-              <div className="text-sm font-semibold">Up next</div>
-              <div className="text-xs text-muted-foreground">Your nearest open tasks.</div>
+              <h2 className="text-base font-semibold">Up next</h2>
             </div>
-            <Link to="/weekly" className="text-xs text-primary hover:underline inline-flex items-center gap-1">View all <ArrowRight className="h-3 w-3" /></Link>
+            <Link to="/weekly" className="text-sm text-primary hover:underline inline-flex items-center gap-1">View all <ArrowRight aria-hidden="true" className="h-4 w-4" /></Link>
           </div>
           <ul className="divide-y divide-border">
-            {upNext.length === 0 && <li className="px-5 py-8 text-sm text-muted-foreground">All caught up — great work.</li>}
+            {upNext.length === 0 && <li className="py-8 text-sm text-muted-foreground">All caught up — great work.</li>}
             {upNext.map((t) => (
-              <li key={t.id} className="flex items-center justify-between px-5 py-3">
-                <span className="text-sm">{t.title}</span>
-                <span className="eyebrow">Week {t.week_number}</span>
+              <li key={t.id} className="flex items-center justify-between gap-4 py-4">
+                <span className="min-w-0 text-sm break-words">{t.title}</span>
+                <span className="shrink-0 text-xs text-muted-foreground">Week {t.week_number}</span>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
 
-        <div className="rounded-xl border border-border bg-card p-5">
-          <div className="text-sm font-semibold">Quick start</div>
-          <div className="text-xs text-muted-foreground">Get into execution mode in one click.</div>
-          <div className="mt-4 space-y-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold">Quick start</h2>
+          <div className="divide-y divide-border">
             <QuickLink to="/focus" label="Start a focus session" />
             <QuickLink to="/weekly" label="Open weekly planner" />
             <QuickLink to="/applications" label="Track an application" />
           </div>
+        </section>
         </div>
       </div>
     </div>
@@ -106,16 +107,16 @@ function ScoreCard({ parts }: { parts: any }) {
     ["Consistency", parts?.consistency_score ?? 0],
   ] as const;
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <span className="eyebrow">Career readiness score</span>
-      <div className="mt-2 flex items-baseline gap-1">
-        <span className="text-5xl font-bold tracking-tight">{total}</span>
+    <section className="min-w-0">
+      <h2 className="text-sm font-medium text-muted-foreground">Career readiness</h2>
+      <div className="mt-3 flex items-baseline gap-1">
+        <span className="text-6xl font-semibold tabular-nums">{total}</span>
         <span className="text-muted-foreground">/100</span>
       </div>
-      <div className="mt-5 space-y-2">
+      <div className="mt-7 grid gap-x-5 gap-y-3 sm:grid-cols-2">
         {sub.map(([k, v]) => (
           <div key={k}>
-            <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">{k}</span>
               <span className="font-medium tabular-nums">{v}</span>
             </div>
@@ -125,31 +126,24 @@ function ScoreCard({ parts }: { parts: any }) {
           </div>
         ))}
       </div>
-      <div className="mt-4 rounded-md bg-accent/60 px-3 py-2 text-xs">
-        <span className="font-medium">Next best action: </span>
-        <span className="text-muted-foreground">Aim for at least 10 hours of focused work this week.</span>
-      </div>
-    </div>
+    </section>
   );
 }
 
-function Stat({ label, value, icon: Icon }: { label: string; value: string; icon: any }) {
+function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
-      <div className="flex items-center justify-between">
-        <span className="eyebrow">{label}</span>
-        <Icon className="h-4 w-4 text-muted-foreground" />
-      </div>
-      <div className="mt-2 text-2xl font-semibold tracking-tight">{value}</div>
+    <div className="min-w-0 border-l border-border pl-4">
+      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="mt-2 text-xl font-semibold tabular-nums break-words">{value}</div>
     </div>
   );
 }
 
 function QuickLink({ to, label }: { to: string; label: string }) {
   return (
-    <Link to={to as any} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm hover:bg-accent">
+    <Link to={to as any} className="flex items-center justify-between gap-3 py-4 text-sm hover:text-primary">
       {label}
-      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+      <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground" />
     </Link>
   );
 }
