@@ -82,16 +82,16 @@ function Onboarding() {
               <p className="text-muted-foreground text-sm mt-1">A bit of context so we can personalize your roadmap.</p>
             </div>
             <div>
-              <Label>Full name</Label>
-              <Input className="mt-1" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} placeholder="Komal Sharma" required />
+              <Label htmlFor="onboard-name">Full name</Label>
+              <Input id="onboard-name" name="name" autoComplete="name" className="mt-1" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} placeholder="Your full name…" required />
             </div>
             <div>
-              <Label>College</Label>
-              <Input className="mt-1" value={form.college} onChange={(e) => setForm({ ...form, college: e.target.value })} placeholder="Your university or college" required />
+              <Label htmlFor="onboard-college">College</Label>
+              <Input id="onboard-college" name="organization" autoComplete="organization" className="mt-1" value={form.college} onChange={(e) => setForm({ ...form, college: e.target.value })} placeholder="Your university or college…" required />
             </div>
             <div>
-              <Label>Academic year</Label>
-              <select className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.academic_year} onChange={(e) => setForm({ ...form, academic_year: e.target.value })}>
+              <Label htmlFor="onboard-year">Academic year</Label>
+              <select id="onboard-year" className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.academic_year} onChange={(e) => setForm({ ...form, academic_year: e.target.value })}>
                 {["1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year", "Graduate"].map((y) => <option key={y}>{y}</option>)}
               </select>
             </div>
@@ -108,15 +108,15 @@ function Onboarding() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               {ROLES.map((r) => (
-                <button key={r} onClick={() => setForm({ ...form, target_role: r })} className={`text-left rounded-lg border p-4 ${form.target_role === r ? "border-primary ring-2 ring-primary/20 bg-accent" : "border-border hover:bg-accent/60"}`}>
+                <Button key={r} type="button" variant="outline" aria-pressed={form.target_role === r} onClick={() => setForm({ ...form, target_role: r })} className={`h-auto min-h-20 flex-col items-start whitespace-normal text-left ${form.target_role === r ? "border-primary bg-accent" : ""}`}>
                   <div className="font-semibold">{r}</div>
                   <div className="text-xs text-muted-foreground mt-1">{ROLE_SKILLS[r].slice(0, 3).join(" · ")}…</div>
-                </button>
+                </Button>
               ))}
             </div>
             <div>
-              <Label>Timeline</Label>
-              <select className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.timeline_months} onChange={(e) => setForm({ ...form, timeline_months: Number(e.target.value) })}>
+              <Label htmlFor="onboard-timeline">Timeline</Label>
+              <select id="onboard-timeline" className="mt-1 w-full h-10 rounded-md border border-input bg-background px-3 text-sm" value={form.timeline_months} onChange={(e) => setForm({ ...form, timeline_months: Number(e.target.value) })}>
                 {[3, 6, 9, 12].map((m) => <option key={m} value={m}>{m} months</option>)}
               </select>
             </div>
@@ -141,7 +141,7 @@ function Onboarding() {
                     <span className="font-medium">{s}</span>
                     <span className="text-muted-foreground">{ratings[s] ?? 3}/5</span>
                   </div>
-                  <Slider min={1} max={5} step={1} value={[ratings[s] ?? 3]} onValueChange={(v) => setRatings({ ...ratings, [s]: v[0] })} className="mt-2" />
+                  <Slider aria-label={`${s} skill rating`} min={1} max={5} step={1} value={[ratings[s] ?? 3]} onValueChange={(v) => setRatings({ ...ratings, [s]: v[0] })} className="mt-2" />
                 </div>
               ))}
             </div>

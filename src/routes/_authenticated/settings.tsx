@@ -72,27 +72,27 @@ function Settings() {
   return (
     <div>
       <PageHeader eyebrow="Settings" title="Profile" subtitle="Account details and self-assessment." />
-      <div className="px-8 py-8 space-y-8 max-w-2xl">
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-          <div className="text-sm font-semibold">Account</div>
+      <div className="px-5 py-8 space-y-10 max-w-2xl md:px-8">
+        <section className="space-y-4">
+          <h2 className="border-b border-border pb-3 text-base font-semibold">Account</h2>
           <div>
-            <Label>Email</Label>
-            <Input className="mt-1" value={user.email ?? ""} disabled />
+            <Label htmlFor="settings-email">Email</Label>
+            <Input id="settings-email" className="mt-1" value={user.email ?? ""} disabled />
           </div>
           <div>
-            <Label>Full name</Label>
-            <Input className="mt-1" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+            <Label htmlFor="settings-name">Full name</Label>
+            <Input id="settings-name" autoComplete="name" className="mt-1" value={fullName} onChange={(e) => setFullName(e.target.value)} />
           </div>
           <div>
-            <Label>College</Label>
-            <Input className="mt-1" value={college} onChange={(e) => setCollege(e.target.value)} />
+            <Label htmlFor="settings-college">College</Label>
+            <Input id="settings-college" autoComplete="organization" className="mt-1" value={college} onChange={(e) => setCollege(e.target.value)} />
           </div>
           <Button onClick={saveProfile} disabled={saving}>Save changes</Button>
-        </div>
+        </section>
 
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
+        <section className="space-y-4">
           <div>
-            <div className="text-sm font-semibold">Skill self-assessment</div>
+            <h2 className="border-b border-border pb-3 text-base font-semibold">Skill self-assessment</h2>
             <div className="text-xs text-muted-foreground">Update ratings as you grow. Re-runs the readiness score.</div>
           </div>
           {skills.map((s) => (
@@ -101,11 +101,11 @@ function Settings() {
                 <span className="font-medium">{s}</span>
                 <span className="text-muted-foreground tabular-nums">{ratings[s] ?? 3}/5</span>
               </div>
-              <Slider min={1} max={5} step={1} value={[ratings[s] ?? 3]} onValueChange={(v) => setRatings({ ...ratings, [s]: v[0] })} className="mt-2" />
+              <Slider aria-label={`${s} skill rating`} min={1} max={5} step={1} value={[ratings[s] ?? 3]} onValueChange={(v) => setRatings({ ...ratings, [s]: v[0] })} className="mt-2" />
             </div>
           ))}
           <Button onClick={saveSkills} disabled={saving}>Save & recompute</Button>
-        </div>
+        </section>
       </div>
     </div>
   );
